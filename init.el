@@ -1,3 +1,4 @@
+(package-initialize)
 (setq-default tab-width 4)
 (setq c-basic-offset 4)
 ;disable backup
@@ -5,18 +6,21 @@
 ;disable auto save
 (setq auto-save-default nil)
 (setq inhibit-splash-screen t)
+(set-face-attribute 'default nil :height 130)
+(scroll-bar-mode 0)
+(blink-cursor-mode 0)
+(show-paren-mode 0)
 
 (add-to-list 'load-path "~/.emacs.d/undo-tree")
-(add-to-list 'load-path "~/.emacs.d/evil")
 (add-to-list 'load-path "~/.emacs.d/org-bullets")
-(require 'evil)
 (require 'undo-tree)
 (require 'org-bullets)
-(evil-mode t)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (setq inhib-startup-screen t)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
+(ido-mode t)
+(evil-mode t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -26,13 +30,14 @@
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
- '(custom-enabled-themes (quote (gruber-darker)))
+ '(custom-enabled-themes (quote (badger)))
  '(custom-safe-themes
    (quote
-	("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "5c3d187c7cf75ab371b3fbc38778f58a9463b300c9c71e69044fd916361fce8e" "47ec21abaa6642fefec1b7ace282221574c2dd7ef7715c099af5629926eb4fd7" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default)))
+	("e7b49145d311e86da34a32a7e1f73497fa365110a813d2ecd8105eaa551969da" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "5c3d187c7cf75ab371b3fbc38778f58a9463b300c9c71e69044fd916361fce8e" "47ec21abaa6642fefec1b7ace282221574c2dd7ef7715c099af5629926eb4fd7" "dd2346baba899fa7eee2bba4936cfcdf30ca55cdc2df0a1a4c9808320c4d4b22" default)))
+ '(frame-brackground-mode (quote dark))
  '(package-selected-packages
    (quote
-	(evil-visual-mark-mode undo-tree evil markdown-mode haskell-mode gruber-darker-theme goto-chg abyss-theme))))
+	(badger-theme evil-magit magit evil-visual-mark-mode undo-tree evil markdown-mode haskell-mode gruber-darker-theme goto-chg abyss-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -57,4 +62,20 @@ There are two things you can do about this warning:
   (when (< emacs-major-version 24)
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
-(package-initialize)
+
+
+(defun findMarker ()
+  (interactive)
+  (search-forward "<++>")
+  (backward-char 4)
+  (delete-char 4))
+(global-set-key (kbd "C-ç") 'findMarker)
+(defun for ()
+  (interactive)
+  (insert "for(<++>; <++>; <++>) ")
+  (backward-char (length "for(<++>; <++>; <++>) ")))
+
+(defun fi()
+  (interactive)
+  (insert  "if (<++>){\n\t<++>\n} else {\n\t<++>\n}")
+  (previous-line 4))
