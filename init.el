@@ -1,3 +1,4 @@
+(require 'package)
 (package-initialize)
 (setq-default tab-width 4)
 (setq c-basic-offset 4)
@@ -6,21 +7,50 @@
 ;disable auto save
 (setq auto-save-default nil)
 (setq inhibit-splash-screen t)
+(setq inhib-startup-screen t)
 (set-face-attribute 'default nil :height 130)
 (scroll-bar-mode 0)
 (blink-cursor-mode 0)
 (show-paren-mode 0)
 
-(add-to-list 'load-path "~/.emacs.d/undo-tree")
 (add-to-list 'load-path "~/.emacs.d/org-bullets")
+(add-to-list 'load-path "~/.emacs.d/undo-tree")
+
 (require 'undo-tree)
 (require 'org-bullets)
+(require 'evil-mc)
+
+
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-(setq inhib-startup-screen t)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (ido-mode t)
 (evil-mode t)
+(evil-mc-mode 1)
+(set-cursor-color "#fff000")
+
+
+(defun findMarker ()
+  (interactive)
+  (search-forward "<++>")
+  (backward-char 4)
+  (delete-char 4))
+
+
+(defun for ()
+  (interactive)
+  (insert "for(<++>; <++>; <++>) ")
+  (backward-char (length "for(<++>; <++>; <++>) ")))
+
+(defun fi()
+  (interactive)
+  (insert  "if (<++>)")
+  (previous-line 4))
+
+
+(global-set-key (kbd "C-c C-g") 'evil-mc-undo-all-cursors)
+(global-set-key (kbd "C-ç") 'findMarker)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -37,25 +67,17 @@
  '(frame-brackground-mode (quote dark))
  '(package-selected-packages
    (quote
-	(badger-theme evil-magit magit evil-visual-mark-mode undo-tree evil markdown-mode haskell-mode gruber-darker-theme goto-chg abyss-theme))))
+	(evil-mc csv-mode badger-theme evil-magit magit evil-visual-mark-mode undo-tree evil markdown-mode haskell-mode gruber-darker-theme goto-chg abyss-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(require 'package)
-(set-cursor-color "#ff0000")
+
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
-  (when no-ssl
-    (warn "\
-Your version of Emacs does not support SSL connections,
-which is unsafe because it allows man-in-the-middle attacks.
-There are two things you can do about this warning:
-1. Install an Emacs version that does support SSL and be safe.
-2. Remove this warning from your init file so you won't see it again."))
   ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
   ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
@@ -63,19 +85,3 @@ There are two things you can do about this warning:
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 
-
-(defun findMarker ()
-  (interactive)
-  (search-forward "<++>")
-  (backward-char 4)
-  (delete-char 4))
-(global-set-key (kbd "C-ç") 'findMarker)
-(defun for ()
-  (interactive)
-  (insert "for(<++>; <++>; <++>) ")
-  (backward-char (length "for(<++>; <++>; <++>) ")))
-
-(defun fi()
-  (interactive)
-  (insert  "if (<++>){\n\t<++>\n} else {\n\t<++>\n}")
-  (previous-line 4))

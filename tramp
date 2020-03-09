@@ -1,6 +1,27 @@
-;; -*- emacs-lisp -*- <19/08/10 14:06:03 /home/doug/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <20/03/09 15:13:56 /home/douglas/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
-(((tramp-file-name "ssh" "doug" nil "haskell" nil nil nil)
-  nil))
+(((tramp-file-name "ssh" nil nil "10.7.130.20" nil nil nil)
+  nil)
+ ((tramp-file-name "ssh" "spark" nil "10.7.130.20" nil nil nil)
+  ("uname" "Linux 4.15.0-88-generic")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("remote-shell" "/bin/sh")
+  ("~" "/home/spark")
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("file-exists" "test -e")
+  ("case-insensitive" nil)
+  ("ls" "/bin/ls --color=never")
+  ("ls-quoting-style" t)
+  ("ls-dired" t)
+  ("stat" nil)
+  ("id" "/usr/bin/id")
+  ("gid-integer" 1000)
+  ("readlink" "\\readlink")
+  ("gid-string" "spark")))
